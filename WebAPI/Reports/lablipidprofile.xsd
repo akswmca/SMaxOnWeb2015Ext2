@@ -1,0 +1,78 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="profile">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="TESTID" type="xs:int" minOccurs="0" />
+              <xs:element name="PARAMETERID" type="xs:int" minOccurs="0" />
+              <xs:element name="RESULT" type="xs:string" minOccurs="0" />
+              <xs:element name="result2" type="xs:string" minOccurs="0" />
+              <xs:element name="TestName" type="xs:string" minOccurs="0" />
+              <xs:element name="ParameterName" type="xs:string" minOccurs="0" />
+              <xs:element name="SeqNo" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BLANK" type="xs:string" minOccurs="0" />
+              <xs:element name="ResultType" type="xs:int" minOccurs="0" />
+              <xs:element name="ResultXPos" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ParameterXPos" type="xs:decimal" minOccurs="0" />
+              <xs:element name="P_Print" type="xs:boolean" minOccurs="0" />
+              <xs:element name="T_Print" type="xs:unsignedByte" minOccurs="0" />
+              <xs:element name="TSequence" type="xs:int" minOccurs="0" />
+              <xs:element name="UnitName" type="xs:string" minOccurs="0" />
+              <xs:element name="ReferenceRange" type="xs:string" minOccurs="0" />
+              <xs:element name="TREFRANGE" type="xs:string" minOccurs="0" />
+              <xs:element name="Status" type="xs:string" minOccurs="0" />
+              <xs:element name="CumulativeResults" type="xs:int" minOccurs="0" />
+              <xs:element name="IsCulture" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Normal" type="xs:string" minOccurs="0" />
+              <xs:element name="StnName" type="xs:string" minOccurs="0" />
+              <xs:element name="SampleVarified" type="xs:int" minOccurs="0" />
+              <xs:element name="AgeOnVarified" type="xs:string" minOccurs="0" />
+              <xs:element name="IsFontStyleAllowed" type="xs:int" minOccurs="0" />
+              <xs:element name="IsLocWiseMappingAllowed" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="l_note">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="testid" type="xs:int" minOccurs="0" />
+              <xs:element name="Notes" type="xs:string" minOccurs="0" />
+              <xs:element name="DisplayTestId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="doctor_signature">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SigImage1" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="SigImage2" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="SigImage3" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="NABLLogo">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NABLLogo" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="LabMAXLOGO">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="OPHeader1" type="xs:string" minOccurs="0" />
+              <xs:element name="OPHeader2" type="xs:string" minOccurs="0" />
+              <xs:element name="OPHeader3" type="xs:string" minOccurs="0" />
+              <xs:element name="OPLogoName" type="xs:string" minOccurs="0" />
+              <xs:element name="OPLogoData" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

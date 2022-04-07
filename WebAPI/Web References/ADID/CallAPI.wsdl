@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="ADID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ADIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ADIDResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="long" type="s:long" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ADIDSoapIn">
+    <wsdl:part name="parameters" element="tns:ADID" />
+  </wsdl:message>
+  <wsdl:message name="ADIDSoapOut">
+    <wsdl:part name="parameters" element="tns:ADIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="ADIDHttpGetIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ADIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="ADIDHttpPostIn">
+    <wsdl:part name="UserName" type="s:string" />
+    <wsdl:part name="Password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ADIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:portType name="CAPISoap">
+    <wsdl:operation name="ADID">
+      <wsdl:input message="tns:ADIDSoapIn" />
+      <wsdl:output message="tns:ADIDSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CAPIHttpGet">
+    <wsdl:operation name="ADID">
+      <wsdl:input message="tns:ADIDHttpGetIn" />
+      <wsdl:output message="tns:ADIDHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="CAPIHttpPost">
+    <wsdl:operation name="ADID">
+      <wsdl:input message="tns:ADIDHttpPostIn" />
+      <wsdl:output message="tns:ADIDHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CAPISoap" type="tns:CAPISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ADID">
+      <soap:operation soapAction="http://tempuri.org/ADID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CAPISoap12" type="tns:CAPISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ADID">
+      <soap12:operation soapAction="http://tempuri.org/ADID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CAPIHttpGet" type="tns:CAPIHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ADID">
+      <http:operation location="/ADID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CAPIHttpPost" type="tns:CAPIHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ADID">
+      <http:operation location="/ADID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CAPI">
+    <wsdl:port name="CAPISoap" binding="tns:CAPISoap">
+      <soap:address location="http://172.30.0.131:90/CallAPI.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CAPISoap12" binding="tns:CAPISoap12">
+      <soap12:address location="http://172.30.0.131:90/CallAPI.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CAPIHttpGet" binding="tns:CAPIHttpGet">
+      <http:address location="http://172.30.0.131:90/CallAPI.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CAPIHttpPost" binding="tns:CAPIHttpPost">
+      <http:address location="http://172.30.0.131:90/CallAPI.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
