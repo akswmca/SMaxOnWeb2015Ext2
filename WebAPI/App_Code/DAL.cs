@@ -29,27 +29,27 @@ namespace WebAPI.Controllers
         //          PR/ER=4          //
         //          PHP=2            //
         ///////////////////////////////
-        
+
         SqlConnection theCon;
         SqlConnection theConReadOnly;
-        
+
         SqlDatabase db = null;
         SqlDatabase dbReadOnly = null;
-        
+
         public DAL()
         {
             String strCS = ConfigurationManager.ConnectionStrings["DBConnectionString"].ToString();
             String strCSRO = ConfigurationManager.ConnectionStrings["DBConnectionStringReadOnly"].ToString();
-            
+
             strCS = Decryptor.DecryptString(strCS, "3w8motherw4fdcj7");
             strCSRO = Decryptor.DecryptString(strCSRO, "3w8motherw4fdcj7");
-            
+
             db = new SqlDatabase(strCS);
             dbReadOnly = new SqlDatabase(strCSRO);
-            
+
             theCon = new SqlConnection(strCS);
             theConReadOnly = new SqlConnection(strCSRO);
-            
+
         }
 
         public String GetAPISalt(String EnvironmentName, String ClientKey, String MethodName, ref Int32 RetVal)
@@ -84,10 +84,10 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("The server was not found or was not accessible."))                
-                    strReturn = "Database server not found or not accessible.";                
-                else                
-                    strReturn = ex.Message;                
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                    strReturn = "Database server not found or not accessible.";
+                else
+                    strReturn = ex.Message;
                 return "";
 
             }
@@ -122,8 +122,8 @@ namespace WebAPI.Controllers
                 {
 
                     objOutputAll.ItemList = dr.AssembleBECollection<OutItemList>();
-                    if (objOutputAll.ItemList.Count > 0)                    
-                        objOutputAll.Message = "List of Investigation ";                    
+                    if (objOutputAll.ItemList.Count > 0)
+                        objOutputAll.Message = "List of Investigation ";
                     else
                         objOutputAll.Message = "No Investigation found";
                 }
@@ -136,12 +136,12 @@ namespace WebAPI.Controllers
                 {
 
                     objOutputAll.SampleCollectionCharges = dr.AssembleBECollection<OutItemListSampleCollection>();
-                    if (objOutputAll.SampleCollectionCharges.Count > 0)                    
-                        objOutputAll.Message = objOutputAll.Message + " & List of Sample collection charges";                    
-                    else                    
+                    if (objOutputAll.SampleCollectionCharges.Count > 0)
+                        objOutputAll.Message = objOutputAll.Message + " & List of Sample collection charges";
+                    else
                         objOutputAll.Message = objOutputAll.Message + " & Sample collection charges not found";
                 }
-                
+
                 return objOutputAll;
             }
             catch (Exception ex)
@@ -176,18 +176,18 @@ namespace WebAPI.Controllers
 
             try
             {
-                
+
                 cmd = db.GetStoredProcCommand("Pr_Digicare_GetInternalExternalDoctorsList_MAx"); //ajay
                 db.AddInParameter(cmd, "@DocType", DbType.String, objInput.DocType);
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
 
                     objOutput.DoctorList = dr.AssembleBECollection<OutDoctorsList>();
-                    if (objOutput.DoctorList.Count > 0)                    
-                        objOutput.Message = "List of doctors";                    
+                    if (objOutput.DoctorList.Count > 0)
+                        objOutput.Message = "List of doctors";
                     else
                         objOutput.Message = "No doctors found";
-                    
+
                 }
                 return objOutput;
             }
@@ -197,7 +197,7 @@ namespace WebAPI.Controllers
                     objOutput.Message = "Database server not found or not accessible.";
                 else
                     objOutput.Message = ex.Message;
-                
+
                 objOutput.Status = "Failure";
                 objOutput.Code = 0;
                 return objOutput;
@@ -220,7 +220,7 @@ namespace WebAPI.Controllers
             {
                 String[] aMaxID = objInput.MaxID.Split('.');
                 if (aMaxID.Length > 1)
-                { 
+                {
                     cmd = db.GetStoredProcCommand("PR_OnWeb_GetLabOrder"); //ajay
                     db.AddInParameter(cmd, "@Iacode", DbType.String, aMaxID[0]);
                     db.AddInParameter(cmd, "@Registrationno", SqlDbType.Int, Convert.ToInt32(aMaxID[1]));
@@ -239,7 +239,7 @@ namespace WebAPI.Controllers
 
                     }
                 }
-                if ((objOutput!=null)&&(objOutput.TestIDs.Count>0))
+                if ((objOutput != null) && (objOutput.TestIDs.Count > 0))
                 {
                     for (Int32 i = 0; i < objOutput.TestIDs.Count; i++)
                     {
@@ -289,7 +289,7 @@ namespace WebAPI.Controllers
             try
             {
                 cmd = dbReadOnly.GetStoredProcCommand("PR_OnWeb_GetPatientByBed"); //ajay
-                dbReadOnly.AddInParameter(cmd, "@BedID", SqlDbType.Int, objInput.BedID);                    
+                dbReadOnly.AddInParameter(cmd, "@BedID", SqlDbType.Int, objInput.BedID);
                 using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
                 {
                     objBedData.Bed = dr.AssembleBECollection<PatSearchByBedBed>();
@@ -301,7 +301,7 @@ namespace WebAPI.Controllers
                             objOutput.Message = "No bed found.";
                         }
                         else if (objBedData.Bed[0].Deleted == 0)
-                        {   
+                        {
                             dr.NextResult();
                             objPatData.Patients = dr.AssembleBECollection<PatSearchByBedDetail>();
                             if (objPatData.Patients.Count > 0)
@@ -338,15 +338,15 @@ namespace WebAPI.Controllers
                                 objOutput.Message = "No patient found";
                         }
                         else
-                        {   
-                            objOutput.Message= "Deleted Bed.";
+                        {
+                            objOutput.Message = "Deleted Bed.";
                         }
 
                     }
-                    
+
 
                 }
-                
+
                 return objOutput;
             }
             catch (Exception ex)
@@ -378,7 +378,7 @@ namespace WebAPI.Controllers
             DoctorDetailByBedStatusArray oBedStatus = new DoctorDetailByBedStatusArray();
             try
             {
-                
+
                 cmd = dbReadOnly.GetStoredProcCommand("PR_OnWeb_DoctorDetailByBed"); //ajay
                 dbReadOnly.AddInParameter(cmd, "@BedID", SqlDbType.Int, objInput.BedID);
                 using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
@@ -386,7 +386,7 @@ namespace WebAPI.Controllers
                     oBedStatus.RetVal = dr.AssembleBECollection<DoctorDetailByBedStatus>();
                     if (oBedStatus.RetVal.Count > 0)
                     {
-                        objOutput.BedID= oBedStatus.RetVal[0].BedID;
+                        objOutput.BedID = oBedStatus.RetVal[0].BedID;
                         objOutput.LocationID = oBedStatus.RetVal[0].HSPLocationId;
                         objOutput.MaxID = oBedStatus.RetVal[0].MaxID;
                         objOutput.BedName = oBedStatus.RetVal[0].BedName;
@@ -395,10 +395,10 @@ namespace WebAPI.Controllers
 
                         objOutput.RetVal = new List<DoctorDetailByBedMain>();
                         Int32 LocationID = oBedStatus.RetVal[0].HSPLocationId;
-                        
+
                         oDoctor = new DoctorDetailByBedMain();
                         if (oBedStatus.RetVal[0].PrimeDoctorID > 0)
-                        {   
+                        {
                             oDoctor = getGroupDoctor(oBedStatus.RetVal[0].PrimeDoctorID, LocationID);
                             oDoctor.MainDoctorID = oBedStatus.RetVal[0].PrimeDoctorID;
                             oDoctor.MainDoctorName = oBedStatus.RetVal[0].PrimeDoctorName;
@@ -518,7 +518,7 @@ namespace WebAPI.Controllers
         public DoctorChargeRet DoctorCharge(DoctorChargeIn objInput)
         {
             DoctorChargeRet objOutputAll = new DoctorChargeRet();
-            
+
             DbCommand cmd = null;
             try
             {
@@ -534,7 +534,7 @@ namespace WebAPI.Controllers
                     oDCCovid.DoctorCharge = 250;
                     oDCCovid.followup = 0;
                     objOutputAll.Message = "Doctor Charge";
-                    objOutputAll.RetValue.Add(oDCCovid);                    
+                    objOutputAll.RetValue.Add(oDCCovid);
                 }
                 else
                 {
@@ -614,7 +614,7 @@ namespace WebAPI.Controllers
                             objOutputAll.Message = "Doctor Charge not found";
                         }
 
-                        
+
                     }
                 }
                 return objOutputAll;
@@ -658,7 +658,7 @@ namespace WebAPI.Controllers
                     objOutputAll.RetValue = dr.AssembleBECollection<BedsInHospitalOut>();
                     if (objOutputAll.RetValue.Count > 0)
                     {
-                        objOutputAll.Message = "Bed detail.";                        
+                        objOutputAll.Message = "Bed detail.";
                     }
                     else
                     {
@@ -695,7 +695,7 @@ namespace WebAPI.Controllers
         public OutInsertDoctorVisitRet PatientByBedTimeStamp(InInsertDoctorVisit objInput)
         {
             OutInsertDoctorVisitRet objOutput = new OutInsertDoctorVisitRet();
-            
+
             DbCommand cmd = null;
 
             try
@@ -712,12 +712,12 @@ namespace WebAPI.Controllers
                 db.AddOutParameter(cmd, "@RetCode", SqlDbType.Int, 8);
                 db.AddOutParameter(cmd, "@IPID", SqlDbType.Int, 8);
                 db.AddOutParameter(cmd, "@HSPLocationId", SqlDbType.Int, 8);
-                
+
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
                     objOutput.SSNo = cmd.Parameters["@SSNo"].Value.ToString();
                     objOutput.IACode = cmd.Parameters["@IACode"].Value.ToString();
-                    objOutput.RegistrationNo =Convert.ToInt32(cmd.Parameters["@RegistrationNo"].Value.ToString());
+                    objOutput.RegistrationNo = Convert.ToInt32(cmd.Parameters["@RegistrationNo"].Value.ToString());
                     objOutput.Message = cmd.Parameters["@RetMsg"].Value.ToString();
                     objOutput.RetCode = Convert.ToInt32(cmd.Parameters["@RetCode"].Value.ToString());
                     objOutput.IPID = Convert.ToInt32(cmd.Parameters["@IPID"].Value.ToString());
@@ -752,17 +752,17 @@ namespace WebAPI.Controllers
             DefaultDiscount oDefaultDisc = new DefaultDiscount();
             oDefaultDisc.DiscName = "10% discount for Online payment";
             oDefaultDisc.DiscPer = 10;
-            if(LocationID == 3)
+            if (LocationID == 3)
                 oDefaultDisc.DiscountID = 23259;
-            else if (LocationID == 4 )
+            else if (LocationID == 4)
                 oDefaultDisc.DiscountID = 23260;
-            else if (LocationID ==5 )
+            else if (LocationID == 5)
                 oDefaultDisc.DiscountID = 23261;
-            else if (LocationID == 7 )
+            else if (LocationID == 7)
                 oDefaultDisc.DiscountID = 23262;
-            else if (LocationID == 8 )
+            else if (LocationID == 8)
                 oDefaultDisc.DiscountID = 23263;
-            else if (LocationID == 9 )
+            else if (LocationID == 9)
                 oDefaultDisc.DiscountID = 23264;
             else if (LocationID == 10)
                 oDefaultDisc.DiscountID = 23265;
@@ -804,8 +804,8 @@ namespace WebAPI.Controllers
                 oDefaultDisc.DiscName = "No Discount";
                 oDefaultDisc.DiscPer = 10;
             }
-                
-            
+
+
 
 
             return oDefaultDisc;
@@ -821,7 +821,7 @@ namespace WebAPI.Controllers
             {
                 cmd = db.GetStoredProcCommand("Pr_OnWeb_EPrescription_Count_MPHRx"); //ajay
                 db.AddInParameter(cmd, "@sDate", DbType.String, objInput.SDate);
-                
+
 
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
@@ -876,7 +876,7 @@ namespace WebAPI.Controllers
             String strTMS = ConfigurationManager.ConnectionStrings["DBConnectionStringTMS"].ToString();
             strTMS = Decryptor.DecryptString(strTMS, "3w8motherw4fdcj7");
             dbTMS = new SqlDatabase(strTMS);
-            
+
             try
             {
                 cmd = dbTMS.GetStoredProcCommand("pr_l_InterfaceData"); //ajay
@@ -896,7 +896,7 @@ namespace WebAPI.Controllers
                     oArrInterfaceData90.RetValue = dr.AssembleBECollection<InterfaceData90>();
                     if (oArrInterfaceData90.RetValue.Count > 0)
                     {
-                        objOutput.Message = oArrInterfaceData90.RetValue[0].msg;                        
+                        objOutput.Message = oArrInterfaceData90.RetValue[0].msg;
                     }
                     else
                     {
@@ -958,7 +958,7 @@ namespace WebAPI.Controllers
                     TransType = "LabReceived";
                     TransCount = objInput.LabReceived;
                     retMessage = InterfaceData90Insert(TransType, TransCount, objInput.AppName, objInput.sTransDate);
-                    objOutput.Message = objOutput.Message + TransType + ": " + retMessage + ", ";                    
+                    objOutput.Message = objOutput.Message + TransType + ": " + retMessage + ", ";
                 }
 
                 if (objInput.Result > 0)
@@ -1003,7 +1003,7 @@ namespace WebAPI.Controllers
             }
             finally
             {
-                
+
             }
         }
 
@@ -1044,7 +1044,7 @@ namespace WebAPI.Controllers
                     RetMsg = "Database server not found or not accessible.";
                 else
                     RetMsg = ex.Message;
-                
+
             }
             finally
             {
@@ -1056,7 +1056,7 @@ namespace WebAPI.Controllers
 
         public OutSendSMSFromTMSDB90Ret SendSMSFromTMSDB90(InSendSMSFromTMSDB90 objInput)
         {
-            OutSendSMSFromTMSDB90Ret objOutput =new OutSendSMSFromTMSDB90Ret();
+            OutSendSMSFromTMSDB90Ret objOutput = new OutSendSMSFromTMSDB90Ret();
             OutSendSMSFromTMSDB90Ret oDBRet;
             DbCommand cmd = null;
             SqlDatabase dbTMSProd = null;
@@ -1129,7 +1129,7 @@ namespace WebAPI.Controllers
         public OutQMSDisplayGetQueueRet QMSDisplayGetQueue(InQMSDisplayGetQueue objInput)
         {
             OutQMSDisplayGetQueueRet objOutput = new OutQMSDisplayGetQueueRet();
-            
+
             DbCommand cmd = null;
             SqlDatabase dbTMS = null;
             String strTMSProd = ConfigurationManager.ConnectionStrings["DBConnectionStringTMS"].ToString();
@@ -1140,7 +1140,7 @@ namespace WebAPI.Controllers
             {
                 cmd = dbTMS.GetStoredProcCommand("PR_QMSDisplayGetQueue"); //ajay
                 dbTMS.AddInParameter(cmd, "@DisplayID", SqlDbType.Int, objInput.DisplayID);
-                
+
                 using (IDataReader dr = dbTMS.ExecuteReader(cmd))
                 {
                     objOutput.RetVal = dr.AssembleBECollection<OutQMSDisplayGetQueue>();
@@ -1177,7 +1177,7 @@ namespace WebAPI.Controllers
             DietBarCodeKOTTAT oRes = new DietBarCodeKOTTAT();
 
             try
-            {                
+            {
                 cmd = db.GetStoredProcCommand("PR_OnWeb_DietBarCodeKOTTATUpdate"); //ajay
                 db.AddInParameter(cmd, "@BarCode", DbType.String, objInput.BarCode);
                 db.AddInParameter(cmd, "@sScanDateTime", DbType.String, objInput.ScanDateTime);
@@ -1191,11 +1191,11 @@ namespace WebAPI.Controllers
                         objOutput.RetMessage = oRes.RetVal[0].RetMas;
                         objOutput.retID = oRes.RetVal[0].RetID;
                         objOutput.Message = "Success";
-                    }                    
+                    }
                     else
                         objOutput.Message = "Failure";
 
-                }                
+                }
                 return objOutput;
             }
             catch (Exception ex)
@@ -1283,20 +1283,20 @@ namespace WebAPI.Controllers
                                 objLoginOutputAll.Message = "Login Done Sucessfully";
 
                                 objLoginOutputAll.RetValue = new List<OutLogin>();
-                               
-                                    for (int i = 0; i < oLoginData.RetValue.Count; i++)
-                                    {
-                                        oL = new OutLogin();
-                                        oL.HospitalId = oLoginData.RetValue[i].HospitalId;
-                                        oL.HospitalName = oLoginData.RetValue[i].HospitalName;
-                                        oL.StationId = oLoginData.RetValue[i].StationId;
-                                        oL.StationName = oLoginData.RetValue[i].StationName;
 
-                                        objLoginOutputAll.RetValue.Add(oL);
-                                        
-                                    }
+                                for (int i = 0; i < oLoginData.RetValue.Count; i++)
+                                {
+                                    oL = new OutLogin();
+                                    oL.HospitalId = oLoginData.RetValue[i].HospitalId;
+                                    oL.HospitalName = oLoginData.RetValue[i].HospitalName;
+                                    oL.StationId = oLoginData.RetValue[i].StationId;
+                                    oL.StationName = oLoginData.RetValue[i].StationName;
+
+                                    objLoginOutputAll.RetValue.Add(oL);
+
                                 }
-                            
+                            }
+
                         }
                     }
                     else
@@ -1434,7 +1434,7 @@ namespace WebAPI.Controllers
             }
 
         }
-        
+
         public OutPharmacySaveCartOrderRet PharmacySaveCartOrder(InPharmacySaveCartOrder objInput)
         {
 
@@ -1461,7 +1461,7 @@ namespace WebAPI.Controllers
                 dtUrl.Columns.Add("UrlLink", typeof(String));
                 dtUrl.Columns.Add("UrlDesc", typeof(String));
                 dtUrl.Columns.Add("SlNo", typeof(Int32));
-                
+
                 if (objInput.Urls != null)
                 {
                     for (Int32 i = 0; i < objInput.Urls.Count; i++)
@@ -1473,12 +1473,12 @@ namespace WebAPI.Controllers
 
                 cmd = db.GetStoredProcCommand("PR_OnWeb_PharmacyCartOrder"); //ajay
                 db.AddInParameter(cmd, "@flag", DbType.String, objInput.Flag);
-                db.AddInParameter(cmd, "@IACode", DbType.String,objInput.IACode );
-                db.AddInParameter(cmd, "@PatFName", DbType.String,objInput.PatFName);
+                db.AddInParameter(cmd, "@IACode", DbType.String, objInput.IACode);
+                db.AddInParameter(cmd, "@PatFName", DbType.String, objInput.PatFName);
                 db.AddInParameter(cmd, "@PatLName", DbType.String, objInput.PatLName);
-                db.AddInParameter(cmd, "@PatMobNo", DbType.String,objInput.PatMobNo);
-                db.AddInParameter(cmd, "@PatAddress", DbType.String,objInput.PatAddress);
-                db.AddInParameter(cmd, "@sPatDOB", DbType.String,objInput.PatDOB );
+                db.AddInParameter(cmd, "@PatMobNo", DbType.String, objInput.PatMobNo);
+                db.AddInParameter(cmd, "@PatAddress", DbType.String, objInput.PatAddress);
+                db.AddInParameter(cmd, "@sPatDOB", DbType.String, objInput.PatDOB);
                 db.AddInParameter(cmd, "@PaymentMode", DbType.String, objInput.PaymentMode);
                 db.AddInParameter(cmd, "@Remarks", DbType.String, objInput.RemarksMain);
 
@@ -1495,14 +1495,14 @@ namespace WebAPI.Controllers
                 db.AddInParameter(cmd, "@DeliveryType", DbType.String, objInput.DeliveryType);
 
                 db.AddOutParameter(cmd, "@RetMsg", DbType.String, 200);
-                db.AddOutParameter(cmd, "@RetCartOrderID", SqlDbType.Int,8);
+                db.AddOutParameter(cmd, "@RetCartOrderID", SqlDbType.Int, 8);
                 db.AddOutParameter(cmd, "@NoOfItems", SqlDbType.Int, 8);
                 db.AddOutParameter(cmd, "@TotalAmount", SqlDbType.Decimal, 12);
 
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
                     objOutput.DBMessage = cmd.Parameters["@RetMsg"].Value.ToString();
-                    objOutput.CartOrderID =Convert.ToInt32( cmd.Parameters["@RetCartOrderID"].Value);
+                    objOutput.CartOrderID = Convert.ToInt32(cmd.Parameters["@RetCartOrderID"].Value);
                     objOutput.NoOfItems = Convert.ToInt32(cmd.Parameters["@NoOfItems"].Value);
                     objOutput.TotalAmount = Convert.ToDecimal(cmd.Parameters["@TotalAmount"].Value);
                     if (objOutput.DBMessage == "")
@@ -1563,7 +1563,7 @@ namespace WebAPI.Controllers
                 db.AddInParameter(cmd, "@sVisitDateTimeFrom", DbType.String, objInput.VisitDateFrom);
                 db.AddInParameter(cmd, "@sVisitDateTimeTo", DbType.String, objInput.VisitDateTo);
                 db.AddInParameter(cmd, "@HospitalID", SqlDbType.Int, objInput.HospitalID);
-                
+
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
 
@@ -1615,7 +1615,7 @@ namespace WebAPI.Controllers
                 db.AddInParameter(cmd, "@Registrationno", SqlDbType.Int, objInput.Registrationno);
                 db.AddInParameter(cmd, "@PatFName", DbType.String, objInput.PatFName);
                 db.AddInParameter(cmd, "@PatMobNo", DbType.String, objInput.PatMobNo);
-                
+
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
                     objDataFound.RetValue = dr.AssembleBECollection<PharmacyCartOrderSelectIsDataFound>();
@@ -1640,8 +1640,8 @@ namespace WebAPI.Controllers
                         {
                             objOutputAll.Message = "Cart detail not found!";
                         }
-                        
-                    }                        
+
+                    }
                     else
                         objOutputAll.Message = "Cart detail not found!";
                 }
@@ -1683,7 +1683,7 @@ namespace WebAPI.Controllers
 
                 dbReadOnly.AddInParameter(cmd, "@IPID", SqlDbType.Int, objInput.IPID);
                 dbReadOnly.AddInParameter(cmd, "@HSPLocationId", SqlDbType.Int, objInput.HospitalId);
-                
+
                 using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
                 {
                     InPatientDetailTPADetailAll ad = new InPatientDetailTPADetailAll();
@@ -1812,11 +1812,11 @@ namespace WebAPI.Controllers
             }
 
         }
-        
+
         public OutPharmacyCartOrderSearchRet PharmacyCartOrderSearch(InPharmacyCartOrderSearch objInput)
         {
             OutPharmacyCartOrderSearchRet objOutputAll = new OutPharmacyCartOrderSearchRet();
-            
+
             DbCommand cmd = null;
             try
             {
@@ -1884,7 +1884,7 @@ namespace WebAPI.Controllers
                     if (oRV.RetValue.Count > 0)
                     {
                         objOutputAll.Message = oRV.RetValue[0].retMsg;
-                    }                       
+                    }
                     else
                         objOutputAll.Message = "No data found!";
                 }
@@ -1915,7 +1915,7 @@ namespace WebAPI.Controllers
             }
 
         }
-                
+
         public OutPharmacyCartOrderSearchDetailRet PharmacyCartOrderSearchDetail(InPharmacyCartOrderSearchDetail objInput)
         {
             OutPharmacyCartOrderSearchDetailRet objOutputAll = new OutPharmacyCartOrderSearchDetailRet();
@@ -1961,7 +1961,7 @@ namespace WebAPI.Controllers
 
                         dr.NextResult();
                         objOutputAll.RetValueUrl = dr.AssembleBECollection<OutPharmacyCartOrderSearchDetailUrl>();
-                    }                    
+                    }
                 }
                 return objOutputAll;
             }
@@ -1989,7 +1989,7 @@ namespace WebAPI.Controllers
             }
 
         }
-        
+
         public OutVNUAPIPatientRet VNUAPIPatient(InVNUAPIPatient objInput)
         {
             OutVNUAPIPatientRet objOutput = new OutVNUAPIPatientRet();
@@ -2178,7 +2178,7 @@ namespace WebAPI.Controllers
             }
 
         }
-        
+
         public OutAppointmentUpdateRefundRet AppointmentUpdateRefund(InAppointmentUpdateRefund objInput)
         {
             OutAppointmentUpdateRefundRet objOutputAll = new OutAppointmentUpdateRefundRet();
@@ -2195,8 +2195,8 @@ namespace WebAPI.Controllers
                 {
                     MAppointmentUpdateRefundArr oRV = new MAppointmentUpdateRefundArr();
                     oRV.RetValue = dr.AssembleBECollection<MAppointmentUpdateRefund>();
-                    if (oRV.RetValue.Count > 0)                    
-                        objOutputAll.Message = oRV.RetValue[0].retMsg;                    
+                    if (oRV.RetValue.Count > 0)
+                        objOutputAll.Message = oRV.RetValue[0].retMsg;
                     else
                         objOutputAll.Message = "No data found!";
                 }
@@ -2303,7 +2303,7 @@ namespace WebAPI.Controllers
                 {
                     objOutputAll.RetValue = dr.AssembleBECollection<OutPatientDemographyByID>();
                     if (objOutputAll.RetValue.Count > 0)
-                    {   
+                    {
                         objOutputAll.Message = "Patient Detail";
                     }
                     else
@@ -2352,7 +2352,7 @@ namespace WebAPI.Controllers
                 db.AddInParameter(cmd, "@Data5", DbType.String, objInput.Data5);
                 db.AddInParameter(cmd, "@sUpdatedatetime", DbType.String, objInput.Updatedatetime);
                 db.AddInParameter(cmd, "@sSavedatetime", DbType.String, objInput.Savedatetime);
-                
+
 
                 using (IDataReader dr = db.ExecuteReader(cmd))
                 {
@@ -2360,10 +2360,10 @@ namespace WebAPI.Controllers
                     oEP.RetValue = dr.AssembleBECollection<OutMyHealthEPrescription>();
                     if (oEP.RetValue.Count > 0)
                     {
-                        
+
                         objOutputAll.VisitID = oEP.RetValue[0].VisitID;
                         objOutputAll.Message = oEP.RetValue[0].RetMessage;
-                        
+
                     }
                     else
                         objOutputAll.Message = "Internal error. EPrescription not created!";
@@ -2412,7 +2412,7 @@ namespace WebAPI.Controllers
                 db.AddInParameter(cmd, "@VisitId", DbType.Int32, objInput.VisitId);
                 db.AddInParameter(cmd, "@CaseSummaryText", DbType.String, objInput.CaseSummaryText);
                 db.AddInParameter(cmd, "@SourceOfData", DbType.String, objInput.Source);
-                
+
                 using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
                 {
                     OutOPVisitCaseSummary retDB = new OutOPVisitCaseSummary();
@@ -2425,7 +2425,7 @@ namespace WebAPI.Controllers
                         objOutputAll.OnlinePaymentId = retDB.RetValue[0].OnlinePaymentId;
                         objOutputAll.VisitId = retDB.RetValue[0].VisitId;
 
-                        objOutputAll.Code =WebAPI.Models.ProcessStatus.Success;
+                        objOutputAll.Code = WebAPI.Models.ProcessStatus.Success;
                         objOutputAll.Status = "Success";
                     }
                     else
@@ -2470,13 +2470,13 @@ namespace WebAPI.Controllers
                 cmd = db.GetStoredProcCommand("Pr_OnWeb_IP_PatientListDoctorwise");
                 db.AddInParameter(cmd, "@DoctorId", SqlDbType.Int, objInput.DoctorID);
                 db.AddInParameter(cmd, "@HSPLocationId", SqlDbType.Int, objInput.HospitalID);
-                
+
                 using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
                 {
                     objOutputAll.Patients = dr.AssembleBECollection<OutPatientListDoctorwise>();
                     if (objOutputAll.Patients.Count > 0)
                     {
-                        
+
                         objOutputAll.Code = WebAPI.Models.ProcessStatus.Success;
                         objOutputAll.Status = "Success";
                     }
@@ -2530,7 +2530,7 @@ namespace WebAPI.Controllers
                             testIds = testIds + ",";
                         testIds = testIds + objInput.Orders[i].Items[j].ItemId;
                     }
-                    string strOrder = objInput.Orders[i].PatType+objInput.Orders[i].OrderId.ToString();
+                    string strOrder = objInput.Orders[i].PatType + objInput.Orders[i].OrderId.ToString();
                     string encryporderid = Encrypt(strOrder);
                     string encryptestid = Encrypt(testIds);
                     objOutput.urls.Add(new OutLabOrdersCreateURL
@@ -2538,9 +2538,9 @@ namespace WebAPI.Controllers
                         urlPath = LimsUrl + "?LabNo=" + encryporderid + "&TestCode=" + encryptestid,
                         OrderId = objInput.Orders[i].OrderId,
                         Code = Models.ProcessStatus.Success,
-                        PatType=objInput.Orders[i].PatType,
-                        Status="Success",
-                        Message= "Generated URL"
+                        PatType = objInput.Orders[i].PatType,
+                        Status = "Success",
+                        Message = "Generated URL"
                     });
                 }
                 objOutput.Code = Models.ProcessStatus.Success;
@@ -2556,27 +2556,62 @@ namespace WebAPI.Controllers
 
                 objOutput.Status = "Failure";
                 objOutput.Code = 0;
-                
+
                 throw ex;
 
             }
             finally
-            {   
+            {
             }
             return objOutput;
         }
+        //Added By Dhirendra K Singh 11-April-2022 
+        public OutOPBilltailsRet OPBillDetail(InOPBilltails objInput)
+        {
+            OutOPBilltailsRet objOutputAll = new OutOPBilltailsRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbReadOnly.GetStoredProcCommand("PR_OnWeb_OPBillDetail");
+                dbReadOnly.AddInParameter(cmd, "@BillId", DbType.Int32, objInput.BillId);
+                dbReadOnly.AddInParameter(cmd, "@NoOfRecords", DbType.Int32, objInput.NoOfRecords);
 
+                using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutOPBilltails>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "OP Bill Detail";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
 
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
 
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
 
-
-
-
-
-
-
-
-
+        }
 
         private string Encrypt(string encryptText)
         {
@@ -2599,6 +2634,6 @@ namespace WebAPI.Controllers
             }
             return encryptText;
         }
-        
+
     }
 }

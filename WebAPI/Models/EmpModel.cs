@@ -7,14 +7,14 @@ using System.Runtime.Serialization;
 using System.Data;
 namespace WebAPI.Models
 {
-    
+
     public class InItemList
     {
         public int ServiceId { get; set; }
         public int HospitalId { get; set; }
         public int SpokeId { get; set; }
         public string Source { get; set; }
-        
+
     }
 
     public class OutItemList
@@ -39,8 +39,8 @@ namespace WebAPI.Models
 
     }
 
-    public class OutItemListRet:Base
-    {                
+    public class OutItemListRet : Base
+    {
         public List<OutItemList> ItemList { get; set; }
         public List<OutItemListSampleCollection> SampleCollectionCharges { get; set; }
 
@@ -54,7 +54,7 @@ namespace WebAPI.Models
             SampleCollectionCharges = AssembleBECollection<OutItemListSampleCollection>(objIDataReader);
         }
     }
-    
+
     public class InDoctorsList
     {
         public string DocType { get; set; }
@@ -75,8 +75,8 @@ namespace WebAPI.Models
     }
 
     public class OutDoctorsListRet : Base
-    {        
-        public List<OutDoctorsList> DoctorList{ get; set; }
+    {
+        public List<OutDoctorsList> DoctorList { get; set; }
 
         public void GetInternalExternalDoctorsListAssemble(IDataReader objIDataReader)
         {
@@ -131,7 +131,7 @@ namespace WebAPI.Models
     public class PatSearchByBedBed
     {
         public string BedStatus { get; set; }
-        public int Deleted { get; set; }        
+        public int Deleted { get; set; }
     }
 
     public class PatSearchByBedBedData : Base
@@ -145,7 +145,7 @@ namespace WebAPI.Models
     }
 
     public class PatSearchByBedDetail
-    {        
+    {
         public string MaxID { get; set; }
         public string Title { get; set; }
         public string Firstname { get; set; }
@@ -168,7 +168,7 @@ namespace WebAPI.Models
         public string isDMG { get; set; }
     }
 
-    public class PatSearchByBedData:Base
+    public class PatSearchByBedData : Base
     {
         public List<PatSearchByBedDetail> Patients { get; set; }
 
@@ -177,7 +177,7 @@ namespace WebAPI.Models
             Patients = AssembleBECollection<PatSearchByBedDetail>(objIDataReader);
         }
     }
-    
+
     public class OutPatSearchByBedRet : Base
     {
         public string BedStatus { get; set; }
@@ -231,7 +231,7 @@ namespace WebAPI.Models
         public String SecDoctorName { get; set; }
         public Int32 BedID { get; set; }
         public Int32 HSPLocationId { get; set; }
-        
+
 
     }
     public class DoctorDetailByBedStatusArray : Base
@@ -312,12 +312,12 @@ namespace WebAPI.Models
     {
         public int DiscountID { get; set; }
         public string DiscName { get; set; }
-        public decimal DiscPer { get; set; }        
+        public decimal DiscPer { get; set; }
     }
 
-   
+
     public class BedsInHospitalIn
-    {        
+    {
         public int HospitalID { get; set; }
         public string Source { get; set; }
     }
@@ -333,7 +333,7 @@ namespace WebAPI.Models
         public int StationId { get; set; }
         public int FloorId { get; set; }
         public int Census { get; set; }
-        public int IsCritical { get; set; }        
+        public int IsCritical { get; set; }
     }
 
     public class BedsInHospitalRet : Base
@@ -346,7 +346,7 @@ namespace WebAPI.Models
         }
     }
 
-    public class InInsertDoctorVisit 
+    public class InInsertDoctorVisit
     {
         public int BedID { get; set; }
         public int DoctorID { get; set; }
@@ -364,10 +364,10 @@ namespace WebAPI.Models
         public int RetCode { get; set; }
         public int IPID { get; set; }
         public int HSPLocationId { get; set; }
-        
+
 
     }
-    
+
     public class InEPCountMPHRx
     {
         public String SDate { get; set; }
@@ -378,7 +378,7 @@ namespace WebAPI.Models
     {
         public Int32 NCount { get; set; }
         public String Response { get; set; }
-        public String Code { get; set; }        
+        public String Code { get; set; }
     }
 
     public class OutEPCountMPHRxRet : Base
@@ -410,7 +410,7 @@ namespace WebAPI.Models
     {
         public Int32 code { get; set; }
         public String msg { get; set; }
-        
+
     }
 
     public class ArrInterfaceData90 : Base
@@ -425,7 +425,7 @@ namespace WebAPI.Models
 
     public class OutInterfaceData90Ret : Base
     {
-        
+
     }
 
     public class InOneSendSMSFromTMSDB90
@@ -433,7 +433,7 @@ namespace WebAPI.Models
         public String RefId { get; set; }
         public String MobileNo { get; set; }
         public String Message { get; set; }
-        
+
     }
 
     public class InSendSMSFromTMSDB90 : Base
@@ -463,9 +463,9 @@ namespace WebAPI.Models
         public String sStatusText { get; set; }
         public String DBDetMessage { get; set; }
     }
-    
+
     public class OutSendSMSFromTMSDB90Ret : Base
-    {   
+    {
         public List<OutSendSMSFromTMSDB90> RetVal
         {
             get;
@@ -516,10 +516,10 @@ namespace WebAPI.Models
         public string Source { get; set; }
     }
 
-    public class OutDietBarCodeKOTTAT:Base
+    public class OutDietBarCodeKOTTAT : Base
     {
         public string retID { get; set; }
-        public string RetMessage { get; set; }        
+        public string RetMessage { get; set; }
     }
 
     public class DietBarCodeKOTTATData
@@ -574,14 +574,14 @@ namespace WebAPI.Models
         }
     }
 
-    public class OutLogin 
+    public class OutLogin
     {
         public Int32 HospitalId { get; set; }
-        public String HospitalName { get; set; }        
+        public String HospitalName { get; set; }
         public Int32 StationId { get; set; }
         public String StationName { get; set; }
     }
-        
+
     public class OutLoginRet : Base
     {
         public Int32 UserId { get; set; }
@@ -611,11 +611,11 @@ namespace WebAPI.Models
     public class OutSearchMedicine
     {
         public Int32 ID { get; set; }
-        public String Name { get; set; }        
+        public String Name { get; set; }
     }
 
     public class OutSearchMedicineRet : Base
-    {   
+    {
         public List<OutSearchMedicine> RetValue
         {
             get;
@@ -654,7 +654,7 @@ namespace WebAPI.Models
             RetValue = AssembleBECollection<OutBatchWiseQuantity>(objIDataReader);
         }
     }
-    
+
 
     public class InPharmacySaveCartOrderItems
     {
@@ -691,7 +691,7 @@ namespace WebAPI.Models
         public Int32 DiscountID { get; set; }
         public String DeliveryType { get; set; }
         public String Source { get; set; }
-        
+
         public List<InPharmacySaveCartOrderItems> Items { get; set; }
 
         public void Assemble(IDataReader objIDataReader)
@@ -722,7 +722,7 @@ namespace WebAPI.Models
         public Int32 NoOfItems { get; set; }
         public Decimal TotalAmount { get; set; }
     }
-        
+
     public class InGetEPrescriptionList
     {
         public String IACode { get; set; }
@@ -741,7 +741,7 @@ namespace WebAPI.Models
         public Int32 RefDoctorId { get; set; }
         public String RefDoctorName { get; set; }
         public Int32 HospitalID { get; set; }
-        public String HospitalName { get; set; }        
+        public String HospitalName { get; set; }
     }
 
     public class OutGetEPrescriptionListRet : Base
@@ -765,7 +765,7 @@ namespace WebAPI.Models
         public Int32 Registrationno { get; set; }
         public String PatFName { get; set; }
         public String PatMobNo { get; set; }
-        public String Source { get; set; }        
+        public String Source { get; set; }
     }
 
     public class PharmacyCartOrderSelectIsDataFound
@@ -778,7 +778,7 @@ namespace WebAPI.Models
         public String PatFName { get; set; }
         public String PatLName { get; set; }
         public String PatMobNo { get; set; }
-        public String PatAddress { get; set; }        
+        public String PatAddress { get; set; }
     }
     public class PharmacyCartOrderSelectIsDataFoundArr : Base
     {
@@ -814,7 +814,7 @@ namespace WebAPI.Models
         public String PatLName { get; set; }
         public String PatMobNo { get; set; }
         public String PatAddress { get; set; }
-        
+
         public List<OutPharmacyCartOrderSelect> RetValue
         {
             get;
@@ -856,7 +856,7 @@ namespace WebAPI.Models
 
     public class OutPharmacyCartOrderSearchRet : Base
     {
-        
+
         public List<OutPharmacyCartOrderSearch> RetValue
         {
             get;
@@ -880,22 +880,22 @@ namespace WebAPI.Models
     public class MAppointmentCancel
     {
         public String retMsg { get; set; }
-        
+
     }
 
     public class MAppointmentCancelArr : Base
     {
-        public List<MAppointmentCancel> RetValue {get;set;}
+        public List<MAppointmentCancel> RetValue { get; set; }
 
         public void Assemble(IDataReader objIDataReader)
         {
             RetValue = AssembleBECollection<MAppointmentCancel>(objIDataReader);
         }
     }
-    
+
     public class OutAppointmentCancelRet : Base
     {
-        
+
     }
 
 
@@ -962,7 +962,7 @@ namespace WebAPI.Models
 
     public class PharmacyCartOrderSearchDetailArr : Base
     {
-        
+
         public List<OutPharmacyCartOrderSearchDetailRet> RetValue
         {
             get;
@@ -976,7 +976,7 @@ namespace WebAPI.Models
 
 
     public class OutPharmacyCartOrderSearchDetail
-    {        
+    {
         public Int32 ItemID { get; set; }
         public String itemName { get; set; }
         public Int32 BatchID { get; set; }
@@ -1023,7 +1023,7 @@ namespace WebAPI.Models
         public Int32 CancelledReasonId { get; set; }
         public String CancelledRemarks { get; set; }
         public String DeliveryType { get; set; }
-        
+
         public List<OutPharmacyCartOrderSearchDetail> RetValue
         {
             get;
@@ -1050,7 +1050,7 @@ namespace WebAPI.Models
         public String MaxID { get; set; }
         public String BillNo { get; set; }
         public Int32 IPID { get; set; }
-        public Int32 HospitalID { get; set; }        
+        public Int32 HospitalID { get; set; }
         public String Source { get; set; }
     }
 
@@ -1101,7 +1101,7 @@ namespace WebAPI.Models
 
     public class InPatientDemographyByID
     {
-        public Int32 PatID { get; set; }        
+        public Int32 PatID { get; set; }
     }
 
     public class OutPatientDemographyByID
@@ -1171,7 +1171,7 @@ namespace WebAPI.Models
         public string Source { get; set; }
     }
 
-    
+
 
     public class OutOPVisitCaseSummary : Base
     {
@@ -1183,7 +1183,7 @@ namespace WebAPI.Models
         }
     }
 
-    
+
     public class OutOPVisitCaseSummaryRet : Base
     {
         public int CaseSummaryId { get; set; }
@@ -1235,7 +1235,7 @@ namespace WebAPI.Models
     {
         public string ItemId { get; set; }
     }
-    
+
     public class InLabOrdersCreateURL
     {
         public string OrderId { get; set; }
@@ -1249,36 +1249,62 @@ namespace WebAPI.Models
         public string UserId { get; set; }
         public List<InLabOrdersCreateURL> Orders { get; set; }
     }
-    
-    public class OutLabOrdersCreateURL:Base
+
+    public class OutLabOrdersCreateURL : Base
     {
         public string urlPath { get; set; }
         public string OrderId { get; set; }
         public string PatType { get; set; }
     }
 
-    public class OutLabOrdersCreateURLRet:Base
-    {   
+    public class OutLabOrdersCreateURLRet : Base
+    {
         public List<OutLabOrdersCreateURL> urls { get; set; }
     }
 
+    public class InOPBilltails
+    {
+        public int BillId { get; set; }
+        public int NoOfRecords { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutOPBilltails
+    {
+        public string MaxID { get; set; }
+        public string Company { get; set; }
+        public string Patient { get; set; }
+        public string Pphone { get; set; }
+        public string PCellNo { get; set; }
+        public string Email { get; set; }
+        public string BillDate { get; set; }
+        public string BillNo { get; set; }
+        public decimal Amount { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public string DiscountReason { get; set; }
+        public string Location { get; set; }
+        public string LocalAddress { get; set; }
+        public string CityName { get; set; }
+        public string DoctorName { get; set; }
+        public string SpecName { get; set; }
+        public string PaymentType { get; set; }
+        public string ServiceName { get; set; }
+        public string ItemName { get; set; }
+        public string Department { get; set; }
+        public string Channel { get; set; }
+        public string Age { get; set; }
+        public string AdmissionDate { get; set; }
+        public string DischargeDateTime { get; set; }
+    }
 
+    public class OutOPBilltailsRet : Base
+    {
+        public List<OutOPBilltails> RetValue { get; set; }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutOPBilltails>(objIDataReader);
+        }
+    }
 
 
 }
