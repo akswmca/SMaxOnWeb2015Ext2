@@ -1306,5 +1306,26 @@ namespace WebAPI.Models
         }
     }
 
+    public class InEPDataSampark
+    {
+        public string MaxId { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutEPDataSampark
+    {
+        public string Diagnosis { get; set; }
+        public string SurgeryName { get; set; }
+        public string DMG { get; set; }        
+    }
+
+    public class OutEPDataSamparkRet : Base
+    {
+        public List<OutEPDataSampark> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutEPDataSampark>(objIDataReader);
+        }
+    }
 
 }

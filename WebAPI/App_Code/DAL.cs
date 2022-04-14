@@ -2613,6 +2613,52 @@ namespace WebAPI.Controllers
 
         }
 
+        //Added By Dhirendra K Singh 13-April-2022 
+        public OutEPDataSamparkRet EPDataSampark(InEPDataSampark objInput)
+        {
+            OutEPDataSamparkRet objOutputAll = new OutEPDataSamparkRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbReadOnly.GetStoredProcCommand("PR_OnWeb_EPData_Sampark");
+                dbReadOnly.AddInParameter(cmd, "@MaxId", DbType.String, objInput.MaxId);
+
+                using (IDataReader dr = dbReadOnly.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutEPDataSampark>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "OP Bill Detail";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+
+        }
         private string Encrypt(string encryptText)
         {
             string EncryptionKey = "MAKV2SPBNI99212";

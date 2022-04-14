@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\DALDatabase.cs" />
+    <Compile Include="Controllers\GetOnWebEPDataSamparkController.cs" />
     <Compile Include="Controllers\GetOnWebOPBillDetailController.cs" />
     <Compile Include="Controllers\LabOrdersCreateURLController.cs" />
     <Compile Include="Controllers\PatientListDoctorwiseController.cs" />
