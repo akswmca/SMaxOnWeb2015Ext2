@@ -209,6 +209,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Code\DALDatabase.cs" />
+    <Compile Include="Controllers\CautiScreeningController.cs" />
+    <Compile Include="Controllers\ClabsiScreeningController.cs" />
     <Compile Include="Controllers\GetOnWebEPDataSamparkController.cs" />
     <Compile Include="Controllers\GetOnWebOPBillDetailController.cs" />
     <Compile Include="Controllers\LabOrdersCreateURLController.cs" />
@@ -218,6 +220,9 @@
     <Compile Include="Controllers\PatientDemographyByIDController.cs" />
     <Compile Include="Controllers\PatientInformationController.cs" />
     <Compile Include="Controllers\AppointmentUpdateRefundController.cs" />
+    <Compile Include="Controllers\ReAdmissionController.cs" />
+    <Compile Include="Controllers\SSIScreeningController.cs" />
+    <Compile Include="Controllers\VapScreeningController.cs" />
     <Compile Include="Controllers\VNUAPIMasterController.cs" />
     <Compile Include="Controllers\VNUAPIPatientController.cs" />
     <Compile Include="Controllers\AppointmentCancelController.cs" />

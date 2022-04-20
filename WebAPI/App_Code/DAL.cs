@@ -35,20 +35,25 @@ namespace WebAPI.Controllers
 
         SqlDatabase db = null;
         SqlDatabase dbReadOnly = null;
+        SqlDatabase dbBI = null;
 
         public DAL()
         {
             String strCS = ConfigurationManager.ConnectionStrings["DBConnectionString"].ToString();
             String strCSRO = ConfigurationManager.ConnectionStrings["DBConnectionStringReadOnly"].ToString();
+            String strCSBI = ConfigurationManager.ConnectionStrings["DBConnectionStringBI"].ToString();
 
             strCS = Decryptor.DecryptString(strCS, "3w8motherw4fdcj7");
             strCSRO = Decryptor.DecryptString(strCSRO, "3w8motherw4fdcj7");
+            strCSBI = Decryptor.DecryptString(strCSBI, "3w8motherw4fdcj7");
 
             db = new SqlDatabase(strCS);
             dbReadOnly = new SqlDatabase(strCSRO);
 
             theCon = new SqlConnection(strCS);
             theConReadOnly = new SqlConnection(strCSRO);
+
+            dbBI = new SqlDatabase(strCSBI);
 
         }
 
@@ -2629,6 +2634,240 @@ namespace WebAPI.Controllers
                     if (objOutputAll.RetValue.Count > 0)
                     {
                         objOutputAll.Message = "OP Bill Detail";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+        }
+        //Added By Dhirendra K Singh 19-April-2022 
+        public OutClabsiScreeningRet ClabsiScreening(InClabsiScreening objInput)
+        {
+            OutClabsiScreeningRet objOutputAll = new OutClabsiScreeningRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbBI.GetStoredProcCommand("PR_OnWeb_ClabsiScreening");
+                dbBI.AddInParameter(cmd, "@FromDate", DbType.DateTime, objInput.FromDate);
+                dbBI.AddInParameter(cmd, "@ToDate", DbType.Date, objInput.ToDate);
+
+                using (IDataReader dr = dbBI.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutClabsiScreening>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "Clabsi Screening";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+
+        }
+        //Added By Dhirendra K Singh 19-April-2022 
+        public OutVapScreeningRet VapScreening(InVapScreening objInput)
+        {
+            OutVapScreeningRet objOutputAll = new OutVapScreeningRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbBI.GetStoredProcCommand("PR_OnWeb_VapScreening");
+                dbBI.AddInParameter(cmd, "@FromDate", DbType.DateTime, objInput.FromDate);
+                dbBI.AddInParameter(cmd, "@ToDate", DbType.Date, objInput.ToDate);
+
+                using (IDataReader dr = dbBI.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutVapScreening>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "Vap Screening";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+
+        }
+        //Added By Dhirendra K Singh 19-April-2022 
+        public OutSSIScreeningRet SSIScreening(InSSIScreening objInput)
+        {
+            OutSSIScreeningRet objOutputAll = new OutSSIScreeningRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbBI.GetStoredProcCommand("PR_OnWeb_SSIScreening");
+                dbBI.AddInParameter(cmd, "@FromDate", DbType.DateTime, objInput.FromDate);
+                dbBI.AddInParameter(cmd, "@ToDate", DbType.Date, objInput.ToDate);
+
+                using (IDataReader dr = dbBI.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutSSIScreening>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "SSI Screening";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+
+        }
+        //Added By Dhirendra K Singh 19-April-2022 
+        public OutCautiScreeningRet CautiScreening(InCautiScreening objInput)
+        {
+            OutCautiScreeningRet objOutputAll = new OutCautiScreeningRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbBI.GetStoredProcCommand("PR_OnWeb_CautiScreening");
+                dbBI.AddInParameter(cmd, "@FromDate", DbType.DateTime, objInput.FromDate);
+                dbBI.AddInParameter(cmd, "@ToDate", DbType.Date, objInput.ToDate);
+
+                using (IDataReader dr = dbBI.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutCautiScreening>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "Cauti Screening";
+                    }
+                    else
+                        objOutputAll.Message = "No data found!";
+                }
+
+                return objOutputAll;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("The server was not found or was not accessible."))
+                {
+                    objOutputAll.Message = "Database server not found or not accessible.";
+                }
+                else
+                {
+                    objOutputAll.Message = ex.Message;
+                }
+
+                objOutputAll.Status = "Failure";
+                objOutputAll.Code = 0;
+                return objOutputAll;
+                throw ex;
+            }
+            finally
+            {
+                if (cmd != null)
+                    cmd.Dispose();
+            }
+
+        }
+        //Added By Dhirendra K Singh 19-April-2022 
+        public OutReAdmissionRet ReAdmission(InReAdmission objInput)
+        {
+            OutReAdmissionRet objOutputAll = new OutReAdmissionRet();
+            DbCommand cmd = null;
+            try
+            {
+                cmd = dbBI.GetStoredProcCommand("PR_OnWeb_ReAdmission");
+                dbBI.AddInParameter(cmd, "@FromDate", DbType.DateTime, objInput.FromDate);
+                dbBI.AddInParameter(cmd, "@ToDate", DbType.Date, objInput.ToDate);
+
+                using (IDataReader dr = dbBI.ExecuteReader(cmd))
+                {
+                    objOutputAll.RetValue = dr.AssembleBECollection<OutReAdmission>();
+                    if (objOutputAll.RetValue.Count > 0)
+                    {
+                        objOutputAll.Message = "Re-Admission";
                     }
                     else
                         objOutputAll.Message = "No data found!";

@@ -1315,7 +1315,7 @@ namespace WebAPI.Models
     {
         public string Diagnosis { get; set; }
         public string SurgeryName { get; set; }
-        public string DMG { get; set; }        
+        public string DMG { get; set; }
     }
 
     public class OutEPDataSamparkRet : Base
@@ -1328,4 +1328,192 @@ namespace WebAPI.Models
         }
     }
 
+    public class InClabsiScreening
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutClabsiScreening
+    {
+        public int ipid { get; set; }
+        public int patient_ssn { get; set; }
+        public decimal age { get; set; }
+        public string centralline { get; set; }
+        public string bloodculture { get; set; }
+        public string ADDRESS3 { get; set; }
+        public string ORGANISM_NAME { get; set; }
+        public string STATION_NAME { get; set; }
+        public string SEX { get; set; }
+        public string admissiondate { get; set; }
+        public string centrallinedate { get; set; }
+        public string bloodculturedate { get; set; }
+        public string CARE_PROVIDER_NAME { get; set; }
+        public string DEPARTMENT_NAME { get; set; }
+        public string PATIENT_NAME { get; set; }
+        public string VITAL_TYPE { get; set; }
+        public decimal VITAL_VALUE_NUMERIC { get; set; }
+        public string vital_enter_date { get; set; }
+        public string test_order_date { get; set; }
+    }
+
+    public class OutClabsiScreeningRet : Base
+    {
+        public List<OutClabsiScreening> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutClabsiScreening>(objIDataReader);
+        }
+    }
+    public class InVapScreening
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutVapScreening
+    {
+        public int ipid { get; set; }
+        public int patient_ssn { get; set; }
+        public decimal age { get; set; }
+        public string Ventilator_procedure { get; set; }
+        public string culturename { get; set; }
+        public string ADDRESS3 { get; set; }
+        public string ORGANISM_NAME { get; set; }
+        public string STATION_NAME { get; set; }
+        public string SEX { get; set; }
+        public string admissiondate { get; set; }
+        public string Ventilatordate { get; set; }
+        public string cultureResultdate { get; set; }
+        public string CARE_PROVIDER_NAME { get; set; }
+        public string DEPARTMENT_NAME { get; set; }
+        public string PATIENT_NAME { get; set; }
+        public string VITAL_TYPE { get; set; }
+        public decimal VITAL_VALUE_NUMERIC { get; set; }
+        public string vital_enter_date { get; set; }
+        public string test_order_date { get; set; }
+        public string SPO2 { get; set; }
+        public decimal SPO2_value { get; set; }
+        public string spo2_date { get; set; }
+    }
+
+    public class OutVapScreeningRet : Base
+    {
+        public List<OutVapScreening> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutVapScreening>(objIDataReader);
+        }
+    }
+    public class InSSIScreening
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutSSIScreening
+    {
+        public int ipid { get; set; }
+        public string bill_type { get; set; }
+        public string organismName { get; set; }
+        public string test_result { get; set; }
+        public string swabtestdate { get; set; }
+        public string testnames { get; set; }
+        public string address3 { get; set; }
+        public int his_order_id { get; set; }
+        public string itemname { get; set; }
+        public int his_hospital_location_id { get; set; }
+        public string surgeryorderday { get; set; }
+        public int patient_ssn { get; set; }
+        public string patient_name { get; set; }
+        public string gender { get; set; }
+        public int AGE { get; set; }
+        public string service_name { get; set; }
+        public string care_provider_name { get; set; }
+    }
+
+    public class OutSSIScreeningRet : Base
+    {
+        public List<OutSSIScreening> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutSSIScreening>(objIDataReader);
+        }
+    }
+    public class InCautiScreening
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutCautiScreening
+    {
+        public int ipid { get; set; }
+        public int patient_ssn { get; set; }
+        public decimal patient_age { get; set; }
+        public string culture_test { get; set; }
+        public string folyscat { get; set; }
+        public string ADDRESS3 { get; set; }
+        public string STATION_NAME { get; set; }
+        public string SEX { get; set; }
+        public string admissiondate { get; set; }
+        public string folyscathdate { get; set; }
+        public string urinecultureorderdate { get; set; }
+        public string CARE_PROVIDER_NAME { get; set; }
+        public string DEPARTMENT_NAME { get; set; }
+        public string PATIENT_NAME { get; set; }
+        public string VITAL_TYPE { get; set; }
+        public decimal VITAL_VALUE_NUMERIC { get; set; }
+        public string vital_enter_date { get; set; }
+        public string culturetestresultdate { get; set; }
+        public string ORGANISM_NAME { get; set; }
+        public string PARAMETER_NAME { get; set; }
+        public decimal TEST_RESULT { get; set; }
+    }
+    public class OutCautiScreeningRet : Base
+    {
+        public List<OutCautiScreening> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutCautiScreening>(objIDataReader);
+        }
+    }
+    public class InReAdmission
+    {
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+        public string Source { get; set; }
+    }
+    public class OutReAdmission
+    {
+        public int IDF_READMISSION { get; set; }
+        public int PATIENT_SSN { get; set; }
+        public string PATIENT_NAME { get; set; }
+        public string DISCHARGE_DATE { get; set; }
+        public string ADMISSION_DATE { get; set; }
+        public string address3 { get; set; }
+        public string READMISSION_DEPARTMENT { get; set; }
+        public string DISCHARGE_DEPARTMENT { get; set; }
+        public string ADMISSION_CARE_PROVIDER { get; set; }
+        public string DISCHARGE_CARE_PROVIDER { get; set; }
+        public string DATEOFBIRTH { get; set; }
+        public string SEX { get; set; }
+        public int PATIENT_ID { get; set; }
+        public string FULLDATE { get; set; }
+        public int READMISSION_PROBLEM_COUNT { get; set; }
+        public int DISCHARGE_PROBLEM_COUNT { get; set; }
+    }
+    public class OutReAdmissionRet : Base
+    {
+        public List<OutReAdmission> RetValue { get; set; }
+
+        public void Assemble(IDataReader objIDataReader)
+        {
+            RetValue = AssembleBECollection<OutReAdmission>(objIDataReader);
+        }
+    }
 }

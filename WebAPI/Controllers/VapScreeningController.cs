@@ -7,28 +7,33 @@ using System.Reflection;
 using System.Web.Http;
 using WebAPI.Models;
 
+
 namespace WebAPI.Controllers
 {
-    public class GetOnWebOPBillDetailController : ApiController
+    public class VapScreeningController : ApiController
     {
         [HttpPost]
-        public OutOPBilltailsRet PostMethod(InOPBilltails objInput)
+        public OutVapScreeningRet PostMethod(InVapScreening objInput)
         {
             DateTime dtStart = DateTime.Now;
-            //MethodBase myM = MethodBase.GetCurrentMethod();
 
-            OutOPBilltailsRet objOutputAll = new OutOPBilltailsRet();
+            OutVapScreeningRet objOutputAll = new OutVapScreeningRet();
 
             String strOutput = "";
             String strInput = "";
             try
             {
-                if (objInput.BillId == 0)
+                if (objInput.FromDate == "")
+                    strOutput = "From date cannot be blank!";
+                else if (objInput.ToDate == "")
+                    strOutput = "To date cannot be blank!";
+                else if (objInput.Source == "")
                     strOutput = "Source cannot be blank!";
+
                 if (strOutput == "")
                 {
                     DAL objDAL = new DAL();
-                    objOutputAll = objDAL.OPBillDetail(objInput);
+                    objOutputAll = objDAL.VapScreening(objInput);
                     strOutput = objOutputAll.Message.ToString();
 
                 }
